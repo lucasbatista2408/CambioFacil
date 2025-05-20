@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cotação e Conversor</title>
+</head>
+<body>
+    <h1>Cotação Atual</h1>
+    {% if cotacoes %}
+        <ul>
+            <li>Dólar (USD): R$ {{ cotacoes['USD'] }}</li>
+            <li>Euro (EUR): R$ {{ cotacoes['EUR'] }}</li>
+            <li>Libra (GBP): R$ {{ cotacoes['GBP'] }}</li>
+        </ul>
+    {% else %}
+        <p>Não foi possível obter as cotações.</p>
+    {% endif %}
+
+    <h2>Conversor para Real (BRL)</h2>
+    <form method="POST">
+        <label>Valor:</label>
+        <input type="text" name="valor" required />
+        <label>Moeda:</label>
+        <select name="moeda">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select>
+        <button type="submit">Converter</button>
+    </form>
+
+    {% if resultado %}
+        <h3>Resultado:</h3>
+        <p>{{ resultado }}</p>
+    {% endif %}
+</body>
+</html>
