@@ -1,18 +1,14 @@
 from flask import Flask, render_template, request
 import requests
-import locale
 
 app = Flask(__name__)
 
-# Configura locale para pt_BR (tenta Unix, depois Windows)
-try:
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-except locale.Error:
-    locale.setlocale(locale.LC_ALL, 'Portuguese_Brazil.1252')
-
 def formatar_valor(valor):
-    """Formata float para string com separador de milhar ponto e decimal vírgula"""
-    return locale.format_string('%.2f', valor, grouping=True)
+    """Formata float para string no formato brasileiro: xxx.xxx.xxx,xx"""
+    partes = f"{valor:,.2f}".split('.')
+    inteiro = partes[0].replace(',', '.')  # substitui vírgula por ponto nos milhares
+    decimal = partes[1]
+    return f"{inteiro},{decimal}"
 
 def buscar_cotacoes():
     url = "https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL,BTC-BRL"
@@ -60,5 +56,4 @@ def index():
     return render_template('index.html', cotacoes=cotacoes_formatadas, resultado=resultado)
 
 if __name__ == '__main__':
-    # Host 0.0.0.0 para Render e debug True para desenvolvimento local
     app.run(debug=True, host='0.0.0.0')
