@@ -2,36 +2,47 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
-    <title>Cotação e Conversor</title>
+    <title>CambioFacil - Cotação e Conversor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Cotação Atual</h1>
+    <header>
+        <h1>CambioFacil</h1>
+        <h2>Cotação Atual</h2>
+    </header>
+
     {% if cotacoes %}
         <ul>
             <li>Dólar (USD): R$ {{ cotacoes['USD'] }}</li>
             <li>Euro (EUR): R$ {{ cotacoes['EUR'] }}</li>
             <li>Libra (GBP): R$ {{ cotacoes['GBP'] }}</li>
+            <li>Bitcoin (BTC): R$ {{ cotacoes['BTC'] }}</li>
         </ul>
     {% else %}
         <p>Não foi possível obter as cotações.</p>
     {% endif %}
 
-    <h2>Conversor para Real (BRL)</h2>
-    <form method="POST">
-        <label>Valor:</label>
-        <input type="text" name="valor" required />
-        <label>Moeda:</label>
-        <select name="moeda">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-        </select>
-        <button type="submit">Converter</button>
-    </form>
+    <section>
+        <h2>Conversor para Real (BRL)</h2>
+        <form method="POST">
+            <label for="valor">Valor:</label>
+            <input type="text" id="valor" name="valor" required />
+            <label for="moeda">Moeda:</label>
+            <select id="moeda" name="moeda" required>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="BTC">BTC</option>
+            </select>
+            <button type="submit">Converter</button>
+        </form>
+    </section>
 
     {% if resultado %}
-        <h3>Resultado:</h3>
-        <p>{{ resultado }}</p>
+        <section>
+            <h3>Resultado:</h3>
+            <p>{{ resultado }}</p>
+        </section>
     {% endif %}
 </body>
 </html>
